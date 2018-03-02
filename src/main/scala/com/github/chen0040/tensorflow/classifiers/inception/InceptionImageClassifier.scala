@@ -54,7 +54,7 @@ class InceptionImageClassifier() extends AutoCloseable {
     val imageTensor = TensorUtils.getImageTensor(image, imgWidth, imgHeight)
     try {
       val sess = new Session(graph)
-      val result = sess.runner.feed("input", imageTensor).fetch("output").run.get(0).expect(classOf[Float])
+      val result = sess.runner.feed("input", imageTensor).fetch("output").run.get(0).expect(classOf[java.lang.Float])
       try {
         val rshape = result.shape
         if (result.numDimensions != 2 || rshape(0) != 1) throw new RuntimeException(String.format("Expected model to produce a [1 N] shaped tensor where N is the number of labels, instead it produced one with shape %s", util.Arrays.toString(rshape)))
