@@ -27,7 +27,7 @@ class Cifar10ImageClassifier() extends AutoCloseable {
 
   def predict_image(image: BufferedImage, imgWidth: Int, imgHeight: Int): String = {
     val image2 = ImageUtils.resizeImage(image, imgWidth, imgHeight)
-    val imageTensor = utils.TensorUtils.getImageTensor(image2, imgWidth, imgHeight)
+    val imageTensor = utils.TensorUtils.getImageTensorScaled(image2, imgWidth, imgHeight)
     try {
       val sess = new Session(graph)
       val result = sess.runner.feed("conv2d_1_input:0", imageTensor).feed("dropout_1/keras_learning_phase:0", Tensor.create(false)).fetch("output_node0:0").run.get(0).expect(classOf[java.lang.Float])

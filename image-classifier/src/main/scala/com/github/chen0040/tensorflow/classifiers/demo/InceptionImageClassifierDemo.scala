@@ -18,7 +18,7 @@ object InceptionImageClassifierDemo {
     val classifier = new InceptionImageClassifier
     classifier.load_model(ResourceUtils.getInputStream("tf_models/tensorflow_inception_graph.pb"))
     classifier.load_labels(ResourceUtils.getInputStream("tf_models/imagenet_comp_graph_label_strings.txt"))
-    val image_names = Array[String]("tiger", "lion")
+    val image_names = Array[String]("tiger", "lion", "eagle")
     for (image_name <- image_names) {
       val image_path = "images/inception/" + image_name + ".jpg"
       val img = ResourceUtils.getImage(image_path)

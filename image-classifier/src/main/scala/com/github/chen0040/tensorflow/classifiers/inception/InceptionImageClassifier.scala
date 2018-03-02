@@ -51,7 +51,7 @@ class InceptionImageClassifier() extends AutoCloseable {
 
   def predict_image(image: BufferedImage, imgWidth: Int, imgHeight: Int): String = {
     val image2 = ImageUtils.resizeImage(image, imgWidth, imgHeight)
-    val imageTensor = TensorUtils.getImageTensor(image, imgWidth, imgHeight)
+    val imageTensor = TensorUtils.getImageTensorNormalized(image2, imgWidth, imgHeight)
     try {
       val sess = new Session(graph)
       val result = sess.runner.feed("input", imageTensor).fetch("output").run.get(0).expect(classOf[java.lang.Float])
