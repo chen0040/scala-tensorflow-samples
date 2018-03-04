@@ -10,12 +10,14 @@ class TextModel(val maxLen: Int, val word2idx: java.util.Map[String, Int]) {
     val ib = FloatBuffer.allocate(maxLen)
 
     var index = 0
-    for(word: String <- text.toLowerCase().split(" ")){
+    val parts = text.toLowerCase().split(" ")
+    val textLen = Math.min(maxLen, parts.length)
+    for(word: String <- parts){
       var idx = 0
       if(word2idx.containsKey(word)) {
         idx  = word2idx.get(word)
       }
-      ib.put(index, idx)
+      ib.put(maxLen - textLen + index, idx)
       index += 1
     }
 
