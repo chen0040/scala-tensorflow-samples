@@ -8,8 +8,8 @@ import scala.collection.JavaConversions._
 object BidirectionalLstmSentimentClassifierDemo {
   def main(args: Array[String]): Unit = {
     val classifier = new BidirectionalLstmSentimentClassifier()
-    classifier.load_model(ResourceUtils.getInputStream("tf_models/wordvec_bidirectional_lstm.pb"))
-    classifier.load_vocab(ResourceUtils.getInputStream("tf_models/wordvec_bidirectional_lstm.csv"))
+    classifier.load_model(ResourceUtils.getInputStream("tf_models/bidirectional_lstm_softmax.pb"))
+    classifier.load_vocab(ResourceUtils.getInputStream("tf_models/bidirectional_lstm_softmax.csv"))
 
     val lines = ResourceUtils.getLines("data/umich-sentiment-train.txt")
 
