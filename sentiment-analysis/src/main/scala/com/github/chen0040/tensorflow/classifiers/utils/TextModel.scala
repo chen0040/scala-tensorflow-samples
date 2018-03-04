@@ -6,8 +6,8 @@ import org.tensorflow.Tensor
 import scala.language.implicitConversions
 
 class TextModel(val maxLen: Int, val word2idx: java.util.Map[String, Int]) {
-  def toTensor(text: String): Tensor[java.lang.Integer] = {
-    val ib = IntBuffer.allocate(maxLen)
+  def toTensor(text: String): Tensor[java.lang.Float] = {
+    val ib = FloatBuffer.allocate(maxLen)
 
     var index = 0
     for(word: String <- text.toLowerCase().split(" ")){

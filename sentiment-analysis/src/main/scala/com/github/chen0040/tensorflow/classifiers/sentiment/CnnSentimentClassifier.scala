@@ -27,7 +27,7 @@ private var textModel: TextModel = null
 
     def predict(text: String): Array[Float] = {
 
-        val textTensor: Tensor[java.lang.Integer] = textModel.toTensor(text)
+        val textTensor: Tensor[java.lang.Float] = textModel.toTensor(text)
         try {
             val sess = new Session(graph)
             val result = sess.runner.feed("embedding_1_input:0", textTensor).feed("spatial_dropout1d_1/keras_learning_phase:0", Tensor.create(false)).fetch("output_node0:0").run.get(0).expect(classOf[java.lang.Float])
