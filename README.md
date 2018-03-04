@@ -8,7 +8,7 @@ Scala samples codes on how to load tensorflow pb model and use them to predict
 
 ### Image Classification using Cifar10
 
-Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/Cifar10ImageClassifierDemo.java)
+Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/Cifar10ImageClassifierDemo.scala)
 of the  Cifar10ImageClassifier which loads the [cnn_cifar10.pb](image-classifier/src/main/resources/tf_models/cnn_cifar10.pb)
 tensorflow model file, and uses it to do image classification:
 
@@ -46,7 +46,7 @@ object Cifar10ImageClassifierDemo {
 
 ### Image Classification using Inception 
 
-Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/InceptionImageClassifierDemo.java)
+Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/InceptionImageClassifierDemo.scala)
 of the  InceptionImageClassifier which loads the [tensorflow_inception_graph.pb](image-classifier/src/main/resources/tf_models/tensorflow_inception_graph.pb)
 tensorflow model file, and uses it to do image classification:
 
@@ -84,7 +84,7 @@ object InceptionImageClassifierDemo {
 
 ### Sentiment Analysis using 1D CNN
 
-Below show the [demo codes](sentiment-analysis/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/CnnSentimentClassifierDemo.java)
+Below show the [demo codes](sentiment-analysis/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/CnnSentimentClassifierDemo.scala)
 of the  InceptionImageClassifier which loads the [wordvec_cnn.pb](sentiment-analysis/src/main/resources/tf_models/wordvec_cnn.pb)
 tensorflow model file, and uses it to do sentiment analysis:
 
