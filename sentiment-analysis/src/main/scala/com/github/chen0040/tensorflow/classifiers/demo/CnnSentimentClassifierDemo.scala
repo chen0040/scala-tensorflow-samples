@@ -15,7 +15,7 @@ object CnnSentimentClassifierDemo {
       val text = line.split("\t")(1)
       val predicted = classifier.predict(text)
       System.out.println(text)
-      System.out.println("Predicted: " + predicted)
+      System.out.println("Predicted: " + predicted(0) + ", " + predicted(1))
     }
   }
 }
