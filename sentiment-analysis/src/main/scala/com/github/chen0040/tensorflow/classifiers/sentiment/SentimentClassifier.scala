@@ -26,7 +26,7 @@ abstract class SentimentClassifier extends AutoCloseable {
     textModel = ResourceUtils.getTextModel(inputStream)
   }
 
-  def predict_label(text: String): Int = {
+  def predict_label(text: String): String = {
     val predicted = predict(text)
     var argmax = 0
     var max = predicted(0)
@@ -36,7 +36,7 @@ abstract class SentimentClassifier extends AutoCloseable {
         argmax = i
       }
     }
-    argmax
+    textModel.toLabel(argmax)
   }
 
   def predict(text: String): Array[Float] = {

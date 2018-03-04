@@ -5,7 +5,7 @@ import org.tensorflow.Tensor
 
 import scala.language.implicitConversions
 
-class TextModel(val maxLen: Int, val word2idx: java.util.Map[String, Int]) {
+class TextModel(val maxLen: Int, val word2idx: java.util.Map[String, Int], val idx2label: java.util.Map[Int, String]) {
   def toTensor(text: String): Tensor[java.lang.Float] = {
     val ib = FloatBuffer.allocate(maxLen)
 
@@ -24,4 +24,6 @@ class TextModel(val maxLen: Int, val word2idx: java.util.Map[String, Int]) {
     Tensor.create(Array[Long](1, maxLen), ib)
 
   }
+
+  def toLabel(idx: Int) : String = idx2label.getOrDefault(idx, "")
 }
