@@ -85,7 +85,41 @@ object InceptionImageClassifierDemo {
 ### Sentiment Analysis using 1D CNN
 
 Below show the [demo codes](sentiment-analysis/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/CnnSentimentClassifierDemo.scala)
-of the  InceptionImageClassifier which loads the [wordvec_cnn.pb](sentiment-analysis/src/main/resources/tf_models/wordvec_cnn.pb)
+of the  CnnSentimentClassifier which loads the [wordvec_cnn.pb](sentiment-analysis/src/main/resources/tf_models/wordvec_cnn.pb)
+tensorflow model file, and uses it to do sentiment analysis:
+
+```scala
+package com.github.chen0040.tensorflow.classifiers.demo
+
+import com.github.chen0040.tensorflow.classifiers.sentiment.CnnSentimentClassifier
+import com.github.chen0040.tensorflow.classifiers.utils.ResourceUtils
+import scala.collection.JavaConversions._
+
+object CnnSentimentClassifierDemo {
+  def main(args: Array[String]): Unit = {
+    val classifier = new CnnSentimentClassifier()
+    classifier.load_model(ResourceUtils.getInputStream("tf_models/wordvec_cnn.pb"))
+    classifier.load_vocab(ResourceUtils.getInputStream("tf_models/wordvec_cnn.csv"))
+
+    val lines = ResourceUtils.getLines("data/umich-sentiment-train.txt")
+    for(line <- lines){
+      val label = line.split("\t")(0)
+      val text = line.split("\t")(1)
+      val predicted = classifier.predict(text)
+      val predicted_label = classifier.predict_label(text)
+      System.out.println(text)
+      System.out.println("Outcome: " + predicted(0) + ", " + predicted(1))
+      System.out.println("Predicted: " + predicted_label + " Actual: " + label)
+    }
+  }
+}
+
+```
+
+### Sentiment Analysis using Bi-directional LSTM
+
+Below show the [demo codes](sentiment-analysis/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/BidirectionalLstmSentimentClassifierDemo.scala)
+of the  BidirectionalLstmSentimentClassifier which loads the [wordvec_bidirectional_lstm.pb](sentiment-analysis/src/main/resources/tf_models/wordvec_bidirectional_lstm.pb)
 tensorflow model file, and uses it to do sentiment analysis:
 
 ```scala
