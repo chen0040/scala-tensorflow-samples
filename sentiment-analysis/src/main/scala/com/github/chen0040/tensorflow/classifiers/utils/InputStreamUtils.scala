@@ -1,5 +1,6 @@
 package com.github.chen0040.tensorflow.classifiers.utils
 
+import scala.language.implicitConversions
 import java.io.{ByteArrayOutputStream, IOException, InputStream}
 
 object InputStreamUtils {

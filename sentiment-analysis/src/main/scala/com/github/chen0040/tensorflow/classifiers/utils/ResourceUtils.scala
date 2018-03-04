@@ -4,7 +4,8 @@ import java.io.{BufferedReader, IOException, InputStream, InputStreamReader}
 import java.util
 
 import org.slf4j.{Logger, LoggerFactory}
-
+import scala.language.implicitConversions
+import scala.collection.JavaConversions._
 
 class ResourceUtils {
 
@@ -16,9 +17,13 @@ object ResourceUtils {
 
   @throws[IOException]
   def getTextModel(file_path: String): TextModel = {
+    getTextModel(getInputStream(file_path))
+  }
+
+  @throws[IOException]
+  def getTextModel(inputStream: InputStream): TextModel = {
     var maxLen = 0
     val word2idx: util.Map[String, Int] = new util.HashMap[String, Int]()
-    val inputStream : InputStream = getInputStream(file_path)
     try {
       val reader = new BufferedReader(new InputStreamReader(inputStream))
       var firstLine = true
@@ -37,7 +42,7 @@ object ResourceUtils {
       }
     } catch{
       case ex: Exception =>
-        logger.error("Failed to get text model " + file_path, ex)
+        logger.error("Failed to get text model", ex)
     }
     new TextModel(maxLen, word2idx)
   }
@@ -45,8 +50,8 @@ object ResourceUtils {
   def main(args: Array[String]): Unit = {
     val model = getTextModel(file_path = "tf_models/lstm_softmax.csv")
     System.out.println("max_len: " + model.maxLen)
-    for(entry: util.Map.Entry[String, Int] <- model.word2idx.entrySet()) {
-      System.out.println(entry.getKey)
+    for(entry <- model.word2idx.entrySet()) {
+      System.out.println(entry.getKey + ": " + entry.getValue)
     }
   }
 }
