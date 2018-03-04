@@ -8,7 +8,7 @@ Scala samples codes on how to load tensorflow pb model and use them to predict
 
 ### Image Classification using Cifar10
 
-Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tflite/classifiers/demo/Cifar10ImageClassifierDemo.java)
+Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/Cifar10ImageClassifierDemo.java)
 of the  Cifar10ImageClassifier which loads the [cnn_cifar10.pb](image-classifier/src/main/resources/tf_models/cnn_cifar10.pb)
 tensorflow model file, and uses it to do image classification:
 
@@ -46,7 +46,7 @@ object Cifar10ImageClassifierDemo {
 
 ### Image Classification using Inception 
 
-Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tflite/classifiers/demo/InceptionImageClassifierDemo.java)
+Below show the [demo codes](image-classifier/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/InceptionImageClassifierDemo.java)
 of the  InceptionImageClassifier which loads the [tensorflow_inception_graph.pb](image-classifier/src/main/resources/tf_models/tensorflow_inception_graph.pb)
 tensorflow model file, and uses it to do image classification:
 
@@ -77,6 +77,36 @@ object InceptionImageClassifierDemo {
       val img = ResourceUtils.getImage(image_path)
       val predicted_label = classifier.predict_image(img)
       System.out.println("predicted class for " + image_name + ": " + predicted_label)
+    }
+  }
+}
+```
+
+### Sentiment Analysis using 1D CNN
+
+Below show the [demo codes](sentiment-analysis/src/main/scala/com/github/chen0040/tensorflow/classifiers/demo/CnnSentimentClassifierDemo.java)
+of the  InceptionImageClassifier which loads the [wordvec_cnn.pb](sentiment-analysis/src/main/resources/tf_models/wordvec_cnn.pb)
+tensorflow model file, and uses it to do sentiment analysis:
+
+```scala
+package com.github.chen0040.tensorflow.classifiers.demo
+
+import com.github.chen0040.tensorflow.classifiers.sentiment.CnnSentimentClassifier
+import com.github.chen0040.tensorflow.classifiers.utils.ResourceUtils
+import scala.collection.JavaConversions._
+
+object CnnSentimentClassifierDemo {
+  def main(args: Array[String]): Unit = {
+    val classifier = new CnnSentimentClassifier()
+    classifier.load_model(ResourceUtils.getInputStream("tf_models/wordvec_cnn.pb"))
+    classifier.load_vocab(ResourceUtils.getInputStream("tf_models/wordvec_cnn.csv"))
+
+    val lines = ResourceUtils.getLines("data/umich-sentiment-train.txt")
+    for(line <- lines){
+      val text = line.split("\t")(1)
+      val predicted = classifier.predict(text)
+      System.out.println(text)
+      System.out.println("Predicted: " + predicted(0) + ", " + predicted(1))
     }
   }
 }
