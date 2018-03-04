@@ -2,8 +2,10 @@ package com.github.chen0040.tensorflow.classifiers.utils
 
 import java.io.{BufferedReader, IOException, InputStream, InputStreamReader}
 import java.util
+import java.util.stream.{Collector, Collectors}
 
 import org.slf4j.{Logger, LoggerFactory}
+
 import scala.language.implicitConversions
 import scala.collection.JavaConversions._
 
@@ -47,11 +49,29 @@ object ResourceUtils {
     new TextModel(maxLen, word2idx)
   }
 
+  @throws[IOException]
+  def getLines(path: String): util.List[String] = {
+    val is = getInputStream(path)
+
+    val result = new util.ArrayList[String]()
+    val reader = new BufferedReader(new InputStreamReader(is))
+    var line = reader.readLine()
+    while(line != null) {
+      result.add(line)
+      line = reader.readLine()
+    }
+    result
+  }
+
   def main(args: Array[String]): Unit = {
     val model = getTextModel(file_path = "tf_models/lstm_softmax.csv")
     System.out.println("max_len: " + model.maxLen)
     for(entry <- model.word2idx.entrySet()) {
       System.out.println(entry.getKey + ": " + entry.getValue)
+    }
+    val lines = getLines("data/umich-sentiment-train.txt")
+    for(line <- lines) {
+      System.out.println(line)
     }
   }
 }
