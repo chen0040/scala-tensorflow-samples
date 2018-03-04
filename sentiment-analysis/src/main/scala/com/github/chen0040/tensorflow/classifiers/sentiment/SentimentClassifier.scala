@@ -26,6 +26,19 @@ abstract class SentimentClassifier extends AutoCloseable {
     textModel = ResourceUtils.getTextModel(inputStream)
   }
 
+  def predict_label(text: String): Int = {
+    val predicted = predict(text)
+    var argmax = 0
+    var max = predicted(0)
+    for(i <- 1 until predicted.length) {
+      if(predicted(i) > max) {
+        max = predicted(i)
+        argmax = i
+      }
+    }
+    argmax
+  }
+
   def predict(text: String): Array[Float] = {
 
     val textTensor: Tensor[java.lang.Float] = textModel.toTensor(text)
@@ -49,7 +62,7 @@ abstract class SentimentClassifier extends AutoCloseable {
     Array.ofDim[Float](2)
   }
 
-  abstract def runPredict(textTensor: Tensor[java.lang.Float], sess: Session): Tensor[java.lang.Float]
+  def runPredict(textTensor: Tensor[java.lang.Float], sess: Session): Tensor[java.lang.Float]
 
   @throws[Exception]
   override def close(): Unit = if (graph != null) {

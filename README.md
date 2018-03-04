@@ -103,11 +103,15 @@ object CnnSentimentClassifierDemo {
 
     val lines = ResourceUtils.getLines("data/umich-sentiment-train.txt")
     for(line <- lines){
+      val label = line.split("\t")(0)
       val text = line.split("\t")(1)
       val predicted = classifier.predict(text)
+      val predicted_label = classifier.predict_label(text)
       System.out.println(text)
-      System.out.println("Predicted: " + predicted(0) + ", " + predicted(1))
+      System.out.println("Outcome: " + predicted(0) + ", " + predicted(1))
+      System.out.println("Predicted: " + predicted_label + " Actual: " + label)
     }
   }
 }
+
 ```
